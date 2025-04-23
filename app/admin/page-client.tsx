@@ -7,17 +7,41 @@ import ProductList from "@/components/admin/product-list";
 import ProductForm from "@/components/admin/product-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Product } from "@/types";
+import { Product as ProductType } from "@/types";
+
+// Import the Product type from the admin component to ensure type consistency
+type Product = {
+  id: number
+  name: string
+  price: number
+  image: string
+  description: string
+  category: string
+  stock: number
+  discount: number
+}
 
 interface AdminPageClientProps {
-  initialProducts: Product[];
+  initialProducts: ProductType[]; // Keep original prop type
 }
 
 export default function AdminPageClient({ initialProducts }: AdminPageClientProps) {
   const router = useRouter();
   const { isLoaded, isSignedIn, user } = useUser();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
-  const [products, setProducts] = useState<Product[]>(initialProducts || []);
+  const [products, setProducts] = useState<Product[]>(
+    // Convert initialProducts to the strict Product type required by ProductList
+    initialProducts?.map(p => ({
+      id: typeof p.id === 'string' ? parseInt(p.id) : p.id,
+      name: p.name,
+      price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
+      image: p.image,
+      description: p.description || '',
+      category: p.category || '',
+      stock: p.stock || 0,
+      discount: p.discount || 0
+    })) || []
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   // Check admin status on component mount
@@ -42,7 +66,17 @@ export default function AdminPageClient({ initialProducts }: AdminPageClientProp
           const productsResponse = await fetch("/api/admin/products");
           if (productsResponse.ok) {
             const productsData = await productsResponse.json();
-            setProducts(productsData.products);
+            // Convert API products to the correct type
+            setProducts(productsData.products.map((p: any) => ({
+              id: typeof p.id === 'string' ? parseInt(p.id) : p.id,
+              name: p.name,
+              price: typeof p.price === 'string' ? parseFloat(p.price) : p.price,
+              image: p.image,
+              description: p.description || '',
+              category: p.category || '',
+              stock: p.stock || 0,
+              discount: p.discount || 0
+            })));
           }
         }
       } catch (error) {
