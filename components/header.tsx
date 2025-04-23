@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { User, MessageSquare, Heart, ShoppingCart, ChevronDown, Menu, Search, X, Loader2, Settings, LogOut } from "lucide-react"
@@ -9,26 +9,16 @@ import { useCart } from "@/context/cart-context"
 import { useUser, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
 import { syncUserWithDb } from "@/lib/user-actions"
 
-export default function Header() {
-  const [categoryOpen, setCategoryOpen] = useState(false)
+// Separate component for parts that use useSearchParams
+function SearchForm() {
   const [query, setQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const router = useRouter()
-  const { itemCount } = useCart() // Get cart item count from context
-  const { isLoaded, user } = useUser()
-  // Add searchParams to initialize search from URL
   const searchParams = useSearchParams()
-  
-  // Sync user with database when signed in
-  useEffect(() => {
-    if (isLoaded && user) {
-      syncUserWithDb();
-    }
-  }, [isLoaded, user]);
   
   // Initialize search query from URL parameters when the component mounts
   useEffect(() => {
-    if (!searchParams) return; // Add this early return to prevent the error
+    if (!searchParams) return;
     
     try {
       // Safely check if searchParams exists and has a get method
@@ -57,6 +47,55 @@ export default function Header() {
   }
 
   return (
+    <form onSubmit={handleSearch} className="relative w-full flex">
+      <input
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        placeholder="Search"
+        className="w-full border border-gray-300 rounded-l-md py-2 px-4 focus:outline-none pr-10"
+      />
+      {query && (
+        <button
+          type="button"
+          onClick={clearSearch}
+          className="absolute right-[120px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+        >
+          <X size={18} />
+        </button>
+      )}
+      <div className="border border-l-0 border-gray-300 px-3 flex items-center">
+        <span className="text-gray-500 text-sm mr-1">All category</span>
+        <ChevronDown size={16} className="text-gray-500" />
+      </div>
+      <button 
+        type="submit" 
+        className="bg-blue-500 text-white px-4 py-2 rounded-r-md flex items-center justify-center min-w-[100px]"
+        disabled={isSearching}
+      >
+        {isSearching ? 
+          <Loader2 className="h-4 w-4 animate-spin mr-1" /> : 
+          <Search size={16} className="mr-1" />
+        }
+        Search
+      </button>
+    </form>
+  )
+}
+
+export default function Header() {
+  const [categoryOpen, setCategoryOpen] = useState(false)
+  const { itemCount } = useCart() // Get cart item count from context
+  const { isLoaded, user } = useUser()
+  
+  // Sync user with database when signed in
+  useEffect(() => {
+    if (isLoaded && user) {
+      syncUserWithDb();
+    }
+  }, [isLoaded, user]);
+
+  return (
     <header className="w-full">
       {/* Top header with search and icons */}
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -68,39 +107,23 @@ export default function Header() {
         </Link>
 
         <div className="hidden md:flex flex-1 max-w-xl mx-8">
-          <form onSubmit={handleSearch} className="relative w-full flex">
-            <input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search"
-              className="w-full border border-gray-300 rounded-l-md py-2 px-4 focus:outline-none pr-10"
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={clearSearch}
-                className="absolute right-[120px] top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                <X size={18} />
-              </button>
-            )}
-            <div className="border border-l-0 border-gray-300 px-3 flex items-center">
-              <span className="text-gray-500 text-sm mr-1">All category</span>
-              <ChevronDown size={16} className="text-gray-500" />
-            </div>
-            <button 
-              type="submit" 
-              className="bg-blue-500 text-white px-4 py-2 rounded-r-md flex items-center justify-center min-w-[100px]"
-              disabled={isSearching}
-            >
-              {isSearching ? 
-                <Loader2 className="h-4 w-4 animate-spin mr-1" /> : 
+          <Suspense fallback={
+            <div className="relative w-full flex">
+              <div className="w-full border border-gray-300 rounded-l-md py-2 px-4 bg-gray-50">
+                Loading search...
+              </div>
+              <div className="border border-l-0 border-gray-300 px-3 flex items-center">
+                <span className="text-gray-500 text-sm mr-1">All category</span>
+                <ChevronDown size={16} className="text-gray-500" />
+              </div>
+              <div className="bg-blue-400 text-white px-4 py-2 rounded-r-md flex items-center justify-center min-w-[100px]">
                 <Search size={16} className="mr-1" />
-              }
-              Search
-            </button>
-          </form>
+                Search
+              </div>
+            </div>
+          }>
+            <SearchForm />
+          </Suspense>
         </div>
 
         <div className="flex items-center gap-5">
