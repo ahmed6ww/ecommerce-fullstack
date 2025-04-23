@@ -1,5 +1,19 @@
+'use client';
+
 import Link from 'next/link';
 import { Suspense } from 'react';
+
+// Separate this component to isolate any hooks that need Suspense
+function HomeLink() {
+  return (
+    <Link 
+      href="/" 
+      className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition-colors"
+    >
+      Return to Home
+    </Link>
+  );
+}
 
 export default function NotFound() {
   return (
@@ -10,15 +24,8 @@ export default function NotFound() {
         <p className="text-gray-600 mb-8">
           The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
         </p>
-        <Suspense fallback={<div>Loading...</div>}>
-          <div className="w-full">
-            <Link 
-              href="/" 
-              className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition-colors"
-            >
-              Return to Home
-            </Link>
-          </div>
+        <Suspense fallback={<div className="w-full h-10 bg-gray-200 rounded-md animate-pulse"></div>}>
+          <HomeLink />
         </Suspense>
       </div>
     </div>
