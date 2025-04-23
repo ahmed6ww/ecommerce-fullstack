@@ -7,7 +7,7 @@ interface CategorySidebarProps {
 
 export default function CategorySidebar({ categories }: CategorySidebarProps) {
   return (
-    <div className="w-full md:w-[220px] shrink-0 h-fit">
+    <div className="hidden md:block w-full md:w-[220px] shrink-0 h-fit">
       <div className="border border-[#dee2e7] rounded-md overflow-hidden">
         <ul key="categories-list">
           {categories.map((category, index) => (

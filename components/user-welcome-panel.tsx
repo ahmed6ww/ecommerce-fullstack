@@ -39,7 +39,7 @@ export default function UserWelcomePanel() {
   // Display a loading state while Clerk is initializing
   if (!isLoaded) {
     return (
-      <div className="bg-white rounded-md border border-[#dee2e7] p-4 flex flex-col gap-3 animate-pulse">
+      <div className="hidden md:block bg-white rounded-md border border-[#dee2e7] p-4 flex flex-col gap-3 animate-pulse">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 bg-gray-200 rounded-full"></div>
           <div className="space-y-2">
@@ -54,7 +54,7 @@ export default function UserWelcomePanel() {
   }
 
   return (
-    <div className="bg-white rounded-md border border-[#dee2e7] p-4 flex flex-col gap-3">
+    <div className="hidden md:flex flex-col gap-3 bg-white rounded-md border border-[#dee2e7] p-4">
       <SignedIn>
         {/* Content for authenticated users */}
         <div className="flex items-center gap-3">
