@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { updateUserAdminStatus } from "@/lib/user-actions"
+import { updateUserAdminStatus, requestAdminAccess } from "@/lib/user-actions"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 
@@ -31,7 +31,8 @@ export default function ProfileInfo({ user }: ProfileInfoProps) {
     if (!user.isAdmin) {
       setLoading(true)
       try {
-        const result = await updateUserAdminStatus(user.id, true)
+        // Call the new requestAdminAccess function instead of updateUserAdminStatus
+        const result = await requestAdminAccess()
         
         if (result.success) {
           toast({

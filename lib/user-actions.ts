@@ -102,6 +102,33 @@ export async function updateUserAdminStatus(userId: string, isAdmin: boolean) {
   }
 }
 
+// Self-service function for users to request admin access for themselves
+// In a real production app, this might create a request that needs approval
+export async function requestAdminAccess() {
+  try {
+    const clerkUser = await currentUser();
+    
+    if (!clerkUser) {
+      return { success: false, error: "Not authenticated" };
+    }
+    
+    // In a development/demo environment, we'll allow self-promotion to admin
+    await db.update(users)
+      .set({ 
+        isAdmin: true, 
+        updatedAt: new Date() 
+      })
+      .where(eq(users.id, clerkUser.id));
+    
+    revalidatePath('/admin');
+    revalidatePath('/profile');
+    return { success: true };
+  } catch (error) {
+    console.error("Error requesting admin access:", error);
+    return { success: false, error: "Failed to update admin status" };
+  }
+}
+
 // Get the current user with additional DB data
 export async function getCurrentUserWithData() {
   try {

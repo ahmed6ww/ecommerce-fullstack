@@ -16,6 +16,8 @@ export default function MobileHeader() {
   const router = useRouter()
   const { itemCount } = useCart()
   const isHomePage = pathname === '/'
+  const isProductsPage = pathname === '/products' || pathname.startsWith('/products?')
+  const shouldShowSearchAndCategories = isHomePage || isProductsPage
   
   const navLinks = [
     { name: "Home", icon: <Home className="h-5 w-5" />, href: "/" },
@@ -147,29 +149,31 @@ export default function MobileHeader() {
           </div>
         </div>
 
-        {/* Mobile search */}
-        <div className="mt-3">
-          <form className="relative w-full flex">
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none pr-10"
-            />
-            <button 
-              type="submit" 
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-gray-500">
-                <circle cx="11" cy="11" r="8" />
-                <path d="m21 21-4.3-4.3" />
-              </svg>
-            </button>
-          </form>
-        </div>
+        {/* Mobile search - only show on homepage and products page */}
+        {shouldShowSearchAndCategories && (
+          <div className="mt-3">
+            <form className="relative w-full flex">
+              <input
+                type="text"
+                placeholder="Search"
+                className="w-full border border-gray-300 rounded-md py-2 px-4 focus:outline-none pr-10"
+              />
+              <button 
+                type="submit" 
+                className="absolute right-2 top-1/2 -translate-y-1/2"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5 text-gray-500">
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        )}
       </div>
       
-      {/* Add the horizontal sliding category menu */}
-      <MobileCategoryMenu />
+      {/* Add the horizontal sliding category menu - only show on homepage and products page */}
+      {shouldShowSearchAndCategories && <MobileCategoryMenu />}
     </div>
   )
 }
