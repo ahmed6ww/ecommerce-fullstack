@@ -54,7 +54,7 @@ export default function UserWelcomePanel() {
   }
 
   return (
-    <div className="hidden md:flex flex-col gap-3 bg-white rounded-md border border-[#dee2e7] p-4">
+    <div className="hidden md:flex h-[23rem] flex-col gap-3 bg-white rounded-md border border-[#dee2e7] p-4">
       <SignedIn>
         {/* Content for authenticated users */}
         <div className="flex items-center gap-3">
@@ -117,7 +117,17 @@ export default function UserWelcomePanel() {
         >
           Register
         </Button>
+
       </SignedOut>
+      <div className="mt-2 p-3 bg-[#f38332]/20 rounded-md">
+                  <p className="text-sm font-medium">Get US $10 off</p>
+                  <p className="text-xs text-[#8b96a5]">with a new supplier</p>
+                </div>
+
+                <div className="p-3 bg-[#55bdc3]/20 rounded-md">
+                  <p className="text-sm font-medium">Send quotes with</p>
+                  <p className="text-xs text-[#8b96a5]">supplier preferences</p>
+                </div>
     </div>
   )
 }

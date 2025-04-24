@@ -60,25 +60,27 @@ export default async function Home() {
           </div>
 
           {/* Main Content - takes all remaining width */}
-          <div className="md:col-span-1">
+          <div className="md:col-span-1 ">
             {/* Hero Section */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-              <div className="md:col-span-2 bg-[#e3f0ff] rounded-md p-6 flex items-center">
-                <div className="flex-1">
-                  <p className="text-sm mb-1">Latest trending</p>
-                  <h2 className="text-xl font-bold mb-2">Electronic items</h2>
-                  <Button variant="outline" className="bg-white text-sm">
-                    Learn more
-                  </Button>
-                </div>
-                <div className="hidden md:block">
+              <div className="md:col-span-2 rounded-md overflow-hidden relative">
+                <div className="absolute inset-0 z-0">
                   <Image
-                    src="./hero-banner.png"
-                    alt="Electronics"
-                    width={200}
-                    height={200}
-                    className="object-contain w-[0rem]"
+                    src="/hero-banner.png"
+                    alt="Hero Banner"
+                    fill
+                    priority
+                    className="object-cover"
                   />
+                </div>
+                <div className="relative z-10 p-6 flex items-center h-full">
+                  <div className="flex-1">
+                    <p className="text-sm md:text-3xl mb-1">Latest trending</p>
+                    <h2 className=" md:text-4xl font-bold mb-2">Electronic items</h2>
+                    <Button variant="outline" className="bg-white  text-sm">
+                      Learn more
+                    </Button>
+                  </div>
                 </div>
               </div>
 
