@@ -228,8 +228,19 @@ export default async function Home() {
         </div>
 
         {/* Supplier Request Section */}
-        <div className="bg-[#0d6efd] rounded-md p-6 mb-8 text-white grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
+        <div className=" bg-[#0d6efd] rounded-md p-6 mb-8 text-white grid grid-cols-1 md:grid-cols-2 gap-6 relative overflow-hidden">
+          {/* Background image - adjusted to cover the entire component */}
+          <div className="absolute inset-0 opacity-20 md:opacity-30">
+            <Image
+              src="/quote-image.png"
+              alt="Quote Background"
+              fill
+              className="object-fit"
+              priority
+            />
+          </div>
+          
+          <div className="relative z-10">
             <h2 className="text-2xl font-semibold mb-2">An easy way to send requests to all suppliers</h2>
             <p className="text-sm opacity-80 mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
@@ -237,7 +248,7 @@ export default async function Home() {
             </p>
           </div>
 
-          <div className="bg-white p-4 rounded-md text-black">
+          <div className="bg-white p-4 rounded-md text-black relative z-10">
             <h3 className="text-lg font-medium mb-4">Send quote to suppliers</h3>
             <div className="space-y-4">
               <Input placeholder="What item you need?" className="border-[#dee2e7]" />
