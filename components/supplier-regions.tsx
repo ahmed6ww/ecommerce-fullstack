@@ -3,16 +3,15 @@ import Link from "next/link"
 
 export default function SupplierRegions() {
   const regions = [
-    { name: "Arabic Emirates", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.ae" },
-    { name: "Australia", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.ae" },
-    { name: "United States", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.ae" },
-    { name: "Russia", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.ru" },
-    { name: "Italy", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.it" },
-    { name: "Denmark", flag: "/placeholder.svg?height=20&width=30", suppliers: "denmark.com.dk" },
-    { name: "France", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.com.fr" },
-    { name: "Arabic Emirates", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.ae" },
-    { name: "China", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.ae" },
-    { name: "Great Britain", flag: "/placeholder.svg?height=20&width=30", suppliers: "shopname.co.uk" },
+    { name: "Arabic Emirates", code: "ae", suppliers: "shopname.ae" },
+    { name: "Australia", code: "au", suppliers: "shopname.ae" },
+    { name: "United States", code: "us", suppliers: "shopname.ae" },
+    { name: "Russia", code: "ru", suppliers: "shopname.ru" },
+    { name: "Italy", code: "it", suppliers: "shopname.it" },
+    { name: "Denmark", code: "dk", suppliers: "denmark.com.dk" },
+    { name: "France", code: "fr", suppliers: "shopname.com.fr" },
+    { name: "China", code: "cn", suppliers: "shopname.ae" },
+    { name: "Great Britain", code: "gb", suppliers: "shopname.co.uk" },
   ]
 
   return (
@@ -27,11 +26,11 @@ export default function SupplierRegions() {
             className="flex items-center gap-2 border border-[#dee2e7] rounded-md p-3 hover:border-[#0d6efd] transition-colors"
           >
             <Image
-              src={region.flag || "/placeholder.svg"}
-              alt={region.name}
+              src={`https://flagcdn.com/${region.code}.svg`}
+              alt={`${region.name} flag`}
               width={30}
               height={20}
-              className="rounded-sm"
+              className="rounded-sm object-cover"
             />
             <div>
               <p className="text-sm font-medium">{region.name}</p>
