@@ -119,7 +119,7 @@ export default function Header() {
                   Loading search...
                 </div>
                 <div className="border border-l-0 border-gray-300 px-3 flex items-center">
-                  <span className="text-gray-500 text-sm mr-1">All category</span>
+                  <span className="text-gray-500  text-sm mr-1">All category</span>
                   <ChevronDown size={16} className="text-gray-500" />
                 </div>
                 <div className="bg-blue-400 text-white px-4 py-2 rounded-r-md flex items-center justify-center min-w-[100px]">

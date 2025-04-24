@@ -102,15 +102,19 @@ export default async function Home() {
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
                 {dealsProducts.map((product) => (
                   <Link key={product.id} href={`/product/${product.id}`} className="flex flex-col items-center border border-[#dee2e7] rounded-md p-4 hover:shadow-md transition-all">
-                    <Image
-                      src={product.image || "/placeholder.svg?height=100&width=100"}
-                      alt={product.name}
-                      width={100}
-                      height={100}
-                      className="object-contain mb-2"
-                    />
-                    <p className="text-sm font-medium">{product.name}</p>
-                    <p className="text-xs text-[#eb001b] font-semibold mt-1">-25%</p>
+                    <div className="h-[120px] w-full flex items-center justify-center mb-4">
+                      <Image
+                        src={product.image || "/placeholder.svg?height=100&width=100"}
+                        alt={product.name}
+                        width={100}
+                        height={100}
+                        className="object-contain max-h-[120px]"
+                      />
+                    </div>
+                    <div className="text-center w-full">
+                      <p className="text-sm font-medium line-clamp-1">{product.name}</p>
+                      <p className="text-xs text-[#eb001b] font-semibold mt-1">-25%</p>
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -126,7 +130,7 @@ export default async function Home() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-5 border border-[#dee2e7] rounded-md overflow-hidden">
-                <div className="relative p-6 flex flex-col justify-between bg-[#ffe8ba]/50 h-full">
+                <div className="relative p-6 flex flex-col justify-between bg-[#ffe8ba]/50 h-full min-h-[280px]">
                   <div>
                     <h3 className="text-lg font-medium mb-1">Home and outdoor</h3>
                     <Link href="/products?category=Home">
@@ -135,27 +139,33 @@ export default async function Home() {
                       </Button>
                     </Link>
                   </div>
-                  <Image
-                    src="/placeholder.svg?height=150&width=150"
-                    alt="Home and outdoor"
-                    width={150}
-                    height={150}
-                    className="object-contain self-end"
-                  />
+                  <div className="mt-4 self-end">
+                    <Image
+                      src="/placeholder.svg?height=150&width=150"
+                      alt="Home and outdoor"
+                      width={150}
+                      height={150}
+                      className="object-contain"
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 md:col-span-4">
                   {homeProducts.slice(0, 8).map((product) => (
                     <Link key={product.id} href={`/product/${product.id}`} className="border-t border-l border-[#dee2e7] p-4 hover:bg-gray-50 transition-colors">
-                      <p className="text-sm font-medium line-clamp-1">{product.name}</p>
-                      <p className="text-xs text-[#8b96a5] mb-2">From USD {product.price.toFixed(2)}</p>
-                      <Image
-                        src={product.image || "/placeholder.svg?height=80&width=80"}
-                        alt={product.name}
-                        width={80}
-                        height={80}
-                        className="object-contain"
-                      />
+                      <div className="h-[90px]">
+                        <p className="text-sm font-medium line-clamp-1">{product.name}</p>
+                        <p className="text-xs text-[#8b96a5] mb-2">From USD {product.price.toFixed(2)}</p>
+                      </div>
+                      <div className="h-[80px] flex items-center justify-center">
+                        <Image
+                          src={product.image || "/placeholder.svg?height=80&width=80"}
+                          alt={product.name}
+                          width={80}
+                          height={80}
+                          className="object-contain max-h-[80px]"
+                        />
+                      </div>
                     </Link>
                   ))}
                 </div>
@@ -172,7 +182,7 @@ export default async function Home() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-5 border border-[#dee2e7] rounded-md overflow-hidden">
-                <div className="relative p-6 flex flex-col justify-between bg-[#ffa7a7]/20 h-full">
+                <div className="relative p-6 flex flex-col justify-between bg-[#ffa7a7]/20 h-full min-h-[280px]">
                   <div>
                     <h3 className="text-lg font-medium mb-1">Consumer electronics and gadgets</h3>
                     <Link href="/products?category=Electronics">
@@ -181,27 +191,33 @@ export default async function Home() {
                       </Button>
                     </Link>
                   </div>
-                  <Image
-                    src="/placeholder.svg?height=150&width=150"
-                    alt="Electronics"
-                    width={150}
-                    height={150}
-                    className="object-contain self-end"
-                  />
+                  <div className="mt-4 self-end">
+                    <Image
+                      src="/placeholder.svg?height=150&width=150"
+                      alt="Electronics"
+                      width={150}
+                      height={150}
+                      className="object-contain"
+                    />
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 md:col-span-4">
                   {electronicsProducts.slice(0, 8).map((product) => (
                     <Link key={product.id} href={`/product/${product.id}`} className="border-t border-l border-[#dee2e7] p-4 hover:bg-gray-50 transition-colors">
-                      <p className="text-sm font-medium line-clamp-1">{product.name}</p>
-                      <p className="text-xs text-[#8b96a5] mb-2">From USD {product.price.toFixed(2)}</p>
-                      <Image
-                        src={product.image || "/placeholder.svg?height=80&width=80"}
-                        alt={product.name}
-                        width={80}
-                        height={80}
-                        className="object-contain"
-                      />
+                      <div className="h-[90px]">
+                        <p className="text-sm font-medium line-clamp-1">{product.name}</p>
+                        <p className="text-xs text-[#8b96a5] mb-2">From USD {product.price.toFixed(2)}</p>
+                      </div>
+                      <div className="h-[80px] flex items-center justify-center">
+                        <Image
+                          src={product.image || "/placeholder.svg?height=80&width=80"}
+                          alt={product.name}
+                          width={80}
+                          height={80}
+                          className="object-contain max-h-[80px]"
+                        />
+                      </div>
                     </Link>
                   ))}
                 </div>
